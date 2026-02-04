@@ -6,6 +6,7 @@ import rebozoFlyer from "@/assets/events/rebozo-postal.jpeg";
 import varsoviaFlyer from "@/assets/events/rebozo-varsovia.jpeg";
 import rebozoMarzoFlyer from "@/assets/events/rebozo-marzo.jpeg";
 import lasOrquestasFlyer from "@/assets/events/las_orquestas_marzo.jpeg";
+import laDamaFebFlyer from "@/assets/events/la_dama_feb.jpeg";
 
 type EventDate = {
   day: string;
@@ -104,6 +105,25 @@ const Events = () => {
         'iO artes escénicas y La Virtud Producciones presentan "Las Orquestas" de Valeria Vega Solórzano.',
       dateText: "8 y 15 de marzo 2026",
       notes: ["Contacto: 5529009002"],
+    },
+    {
+      dates: [
+        { day: "13", time: "20:00 hrs", label: "Viernes" },
+        { day: "20", time: "20:00 hrs", label: "Viernes" },
+        { day: "27", time: "20:00 hrs", label: "Viernes" },
+      ],
+      month: "Marzo",
+      year: "2026",
+      title: "LA DAMA DEL PUERTO",
+      location: "Teatro Varsovia",
+      address: "Teatro Varsovia, Ciudad de México",
+      gradient: "from-amber-500 via-orange-500 to-red-500",
+      flyer: laDamaFebFlyer,
+      description:
+        "Una noche. Dos hombres. Una sola elección. ¡Un espectáculo único de tango!",
+      dateText: "13, 20 y 27 de marzo 2026",
+      notes: ["Boleto $400", "Boletos en taquilla y ticketmaster.com.mx"],
+      ticketUrl: "https://www.ticketmaster.com.mx",
     },
     {
       dates: [
