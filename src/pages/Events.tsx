@@ -7,6 +7,7 @@ import varsoviaFlyer from "@/assets/events/rebozo-varsovia.jpeg";
 import rebozoMarzoFlyer from "@/assets/events/rebozo-marzo.jpeg";
 import lasOrquestasFlyer from "@/assets/events/las_orquestas_marzo.jpeg";
 import laDamaFebFlyer from "@/assets/events/la_dama_feb.jpeg";
+import detrasDeMinFlyer from "@/assets/events/detras-de-mi.jpeg";
 
 type EventDate = {
   day: string;
@@ -19,6 +20,7 @@ type EventItem = {
   month: string;
   year: string;
   title: string;
+  subtitle?: string; // ★ subtítulo opcional bajo el título
   location: string;
   address: string; // dirección fija siempre
   gradient: string;
@@ -72,6 +74,29 @@ const Events = () => {
   const allEvents: EventItem[] = [
     {
       dates: [
+        { day: "26", time: "20:00 hrs", label: "Jueves" },
+        { day: "27", time: "20:00 hrs", label: "Viernes" },
+        { day: "28", time: "19:00 hrs", label: "Sábado" },
+        { day: "29", time: "18:00 hrs", label: "Domingo" },
+      ],
+      month: "Marzo",
+      year: "2026",
+      title: "Detrás de mi",
+      subtitle: "de mujeres y tango",
+      location: "Teatro Varsovia",
+      address: "Teatro Varsovia, Ciudad de México",
+      gradient: "from-purple-500 via-fuchsia-500 to-pink-500",
+      flyer: detrasDeMinFlyer,
+      dateText: "26 al 29 de marzo 2026",
+      notes: [
+        "Jueves y viernes 20 hrs, sábado 19 hrs, domingo 18 hrs",
+        "Boletos en Ticketmaster",
+      ],
+      ticketUrl:
+        "https://www.ticketmaster.com.mx/search?q=detras+de+mi+de+mujeres+y+tangos",
+    },
+    {
+      dates: [
         { day: "11", time: "20:00 hrs", label: "Martes" },
         { day: "18", time: "20:00 hrs", label: "Martes" },
       ],
@@ -123,7 +148,7 @@ const Events = () => {
         "Una noche. Dos hombres. Una sola elección. ¡Un espectáculo único de tango!",
       dateText: "13, 20 y 27 de marzo 2026",
       notes: ["Boleto $400", "Boletos en taquilla y ticketmaster.com.mx"],
-      ticketUrl: "https://www.ticketmaster.com.mx",
+      ticketUrl: "https://www.ticketmaster.com.mx/search?q=la+dama+del+puerto",
     },
     {
       dates: [
@@ -263,6 +288,11 @@ const Events = () => {
                   <h3 className="font-serif tracking-tight text-2xl md:text-3xl font-normal text-white leading-tight">
                     {event.title}
                   </h3>
+                  {event.subtitle && (
+                    <p className="font-sans text-sm text-white/60 italic mt-1">
+                      {event.subtitle}
+                    </p>
+                  )}
 
                   <div className="space-y-2">
                     {/* Dirección fija */}
@@ -370,9 +400,14 @@ const Events = () => {
                     <div
                       className={`w-16 h-1 bg-gradient-to-r ${currentEvent.gradient} rounded-full mb-4`}
                     />
-                    <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-2 leading-tight">
+                    <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1 leading-tight">
                       {currentEvent.title}
                     </h2>
+                    {currentEvent.subtitle && (
+                      <p className="font-sans text-base text-white/60 italic mb-2">
+                        {currentEvent.subtitle}
+                      </p>
+                    )}
                     <p className="text-sm text-white/60">
                       {formatDateDisplay(currentEvent)}
                     </p>
