@@ -2,9 +2,9 @@ import { useState, useMemo } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { FileText, ExternalLink, Download, X } from "lucide-react";
 
-import lasOrquestasImg from "@/assets/varios/las_orquestas_new.jpeg";
+import lasOrquestasImg from "@/assets/shows/orquestas/Las_Orquestas_portada.jpeg";
 import detrasDeMiImg from "@/assets/shows/detras/detras-pose.jpeg";
-import rebozoImg from "@/assets/shows/rebozo/rebozo.jpg";
+import rebozoImg from "@/assets/shows/rebozo/rebozo_portada.jpeg";
 import damaPuertoImg from "@/assets/shows/dama/dama-del-puerto.jpg";
 import suenoVeranoImg from "@/assets/shows/verano/sueno-verano.jpg";
 import notasTangoImg from "@/assets/shows/notas/notas-del-tango.jpeg";
@@ -14,7 +14,6 @@ import miTangoImg from "@/assets/varios/mi-tango.jpeg";
 import queQuilomboImg from "@/assets/varios/que-quilombo.jpeg";
 import tangoOleoImg from "@/assets/varios/tango-oleo.jpeg";
 import ioTangoImg from "@/assets/shows/io/io-tango.jpg";
-import juergaTangosImg from "@/assets/varios/juerga-tangos.jpg";
 import malenaBailaImg from "@/assets/shows/malena/malena-baila.jpeg";
 import valeBnImg from "@/assets/fotos/vale_bn.webp";
 

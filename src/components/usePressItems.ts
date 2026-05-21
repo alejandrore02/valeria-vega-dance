@@ -7,8 +7,8 @@ import puertaEscenicaDetrasImg from "../assets/press/puerta-escenica-detras.jpg"
 import miMoreliaImg from "../assets/press/mi-morelia.jpg";
 import cambioMichoacanImg from "../assets/press/cambio-michoacan.jpg";
 import excelsiorImg from "../assets/press/excelsior.jpg";
-import valeriaPortadaImg from "../assets/fotos/valeria-portada.jpg";
-
+import valeriaPortadaImg from "../assets/fotos/vale_bn.webp";
+import rebozoPortadaImg from "../assets/shows/rebozo/rebozo_portada.jpeg";
 // ---------- Tipos ----------
 export type PressItem =
   | {
@@ -89,6 +89,14 @@ const pressItemsBase: PressItem[] = [
     type: "video",
     videoId: "xyCDWj9nMBk",
     thumbnail: valeriaPortadaImg,
+  },
+  {
+    title: "Reportaje Canal 22",
+    url: "https://youtu.be/pxyqshz3TUM?si=VLbUbY1ioSfaDBpB",
+    description: "Canal 22 presenta entrevista con Valeria Vega Solórzano.",
+    type: "video",
+    videoId: "pxyqshz3TUM",
+    thumbnail: rebozoPortadaImg,
   },
   {
     editorial: "La Voz de Michoacán",

@@ -2,13 +2,6 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Calendar, MapPin, Clock, ExternalLink, X } from "lucide-react";
 
-import rebozoFlyer from "@/assets/events/rebozo-postal.jpeg";
-import varsoviaFlyer from "@/assets/events/rebozo-varsovia.jpeg";
-import rebozoMarzoFlyer from "@/assets/events/rebozo-marzo.jpeg";
-import lasOrquestasFlyer from "@/assets/events/las_orquestas_marzo.jpeg";
-import laDamaFebFlyer from "@/assets/events/la_dama_feb.jpeg";
-import detrasDeMinFlyer from "@/assets/events/detras-de-mi.jpeg";
-
 type EventDate = {
   day: string;
   time?: string;
@@ -72,31 +65,7 @@ const Events = () => {
   }
 
   const allEvents: EventItem[] = [
-    {
-      dates: [
-        { day: "26", time: "20:00 hrs", label: "Jueves" },
-        { day: "27", time: "20:00 hrs", label: "Viernes" },
-        { day: "28", time: "19:00 hrs", label: "Sábado" },
-        { day: "29", time: "18:00 hrs", label: "Domingo" },
-      ],
-      month: "Marzo",
-      year: "2026",
-      title: "Detrás de mi",
-      subtitle: "de mujeres y tango",
-      location: "Teatro Varsovia",
-      address: "Teatro Varsovia, Ciudad de México",
-      gradient: "from-purple-500 via-fuchsia-500 to-pink-500",
-      flyer: detrasDeMinFlyer,
-      dateText: "26 al 29 de marzo 2026",
-      notes: [
-        "Jueves y viernes 20 hrs, sábado 19 hrs, domingo 18 hrs",
-        "Boletos en Ticketmaster",
-      ],
-      ticketUrl:
-        "https://www.ticketmaster.com.mx/search?q=detras+de+mi+de+mujeres+y+tangos",
-    },
-    {
-      dates: [
+    /*dates: [
         { day: "11", time: "20:00 hrs", label: "Martes" },
         { day: "18", time: "20:00 hrs", label: "Martes" },
       ],
@@ -111,69 +80,7 @@ const Events = () => {
         "Espectáculo unipersonal de música, danza y teatro, que aborda el proceso de elaboración del REBOZO, la prenda tradicional mexicana por excelencia, en una metáfora del tejido de la vida misma.",
       dateText: "11 y 18 de febrero 2026",
       notes: ["Boleto $350"],
-    },
-    {
-      dates: [
-        { day: "8", time: "12:00 hrs", label: "Sábado" },
-        { day: "8", time: "17:00 hrs", label: "Sábado" },
-        { day: "15", time: "12:00 hrs", label: "Sábado" },
-        { day: "15", time: "17:00 hrs", label: "Sábado" },
-      ],
-      month: "Marzo",
-      year: "2026",
-      title: "Las Orquestas",
-      location: "Sala Julián Carrillo Radio UNAM",
-      address: "Adolfo Prieto 133, Col. Del Valle, Ciudad de México",
-      gradient: "from-amber-500 via-orange-500 to-red-500",
-      flyer: lasOrquestasFlyer,
-      description:
-        'iO artes escénicas y La Virtud Producciones presentan "Las Orquestas" de Valeria Vega Solórzano.',
-      dateText: "8 y 15 de marzo 2026",
-      notes: ["Contacto: 5529009002"],
-    },
-    {
-      dates: [
-        { day: "13", time: "20:00 hrs", label: "Viernes" },
-        { day: "20", time: "20:00 hrs", label: "Viernes" },
-        { day: "27", time: "20:00 hrs", label: "Viernes" },
-      ],
-      month: "Marzo",
-      year: "2026",
-      title: "LA DAMA DEL PUERTO",
-      location: "Teatro Varsovia",
-      address: "Teatro Varsovia, Ciudad de México",
-      gradient: "from-amber-500 via-orange-500 to-red-500",
-      flyer: laDamaFebFlyer,
-      description:
-        "Una noche. Dos hombres. Una sola elección. ¡Un espectáculo único de tango!",
-      dateText: "13, 20 y 27 de marzo 2026",
-      notes: ["Boleto $400", "Boletos en taquilla y ticketmaster.com.mx"],
-      ticketUrl: "https://www.ticketmaster.com.mx/search?q=la+dama+del+puerto",
-    },
-    {
-      dates: [
-        { day: "28", time: "19:00 hrs", label: "Viernes" },
-        { day: "29", time: "16:00 hrs", label: "Sábado" },
-        { day: "30", time: "13:00 hrs", label: "Domingo" },
-      ],
-      month: "Noviembre",
-      year: "2025",
-      title: "REBOZO",
-      location: "Museo Casa de la Cultura Postal",
-      address:
-        "C. Valentín Gómez Farías 52, San Rafael Cuauhtémoc, 06470, CDMX",
-      gradient: "from-emerald-500 via-teal-500 to-cyan-500",
-      flyer: rebozoFlyer,
-      description:
-        "Espectáculo unipersonal de música, danza y teatro, que aborda el proceso de elaboración del REBOZO, la prenda tradicional mexicana por excelencia, en una metáfora del tejido de la vida misma.",
-      dateText: "28, 29 y 30 de noviembre 2025",
-      notes: [
-        "Boleto $250",
-        "Descuentos a estudiantes e INAPAM",
-        "Boletos en taquilla",
-      ],
-      reservationUrl: "https://wa.me/525513361466",
-    },
+    },*/
   ];
 
   // Filter out past events

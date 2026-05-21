@@ -8,16 +8,15 @@ const About = () => {
       alt: "Valeria Vega Solórzano",
       paragraphs: [
         `Valeria Vega Solórzano es intérprete, coreógrafa, docente de tango y productora escénica con más de veinticinco años de trayectoria profesional. Formada en ballet clásico y teatro, es licenciada en Artes Escénicas por la Universidad de Guadalajara y Maestra en Artes Escénicas por la Universidad UNIR. Su carrera se ha desarrollado entre grandes escenarios y circuitos internacionales, con participación en musicales como El Fantasma de la Ópera y Victor Victoria, producciones operísticas en el Palacio de Bellas Artes, y giras de tango en México, Estados Unidos y China.`,
-        `Discípula de Claudio Villagra y Carlos Gavito, es reconocida como una de las figuras de referencia del tango argentino en México. Su labor pedagógica ha marcado a varias generaciones de bailarines, y su trabajo como creadora incluye la producción de más de una docena de obras escénicas vinculadas al tango. Ha sido jurado en certámenes nacionales de arte y campeonatos de tango, respaldada por un sólido conocimiento técnico y una mirada artística madura. En su práctica, el tango aparece como una forma de pensamiento encarnado. Cada gesto articula memoria, cada pausa convoca escucha, y cada escena abre un espacio donde tradición y experiencia se reconocen. Su presencia escénica transforma el movimiento en lenguaje y el lenguaje en tiempo compartido, dejando una huella que permanece más allá de la función, como una caricia musical que sobrevive en la piel.`,
+
+        `Discípula de Claudio Villagra y Carlos Gavito, es reconocida como una de las figuras de referencia del tango argentino en México. Su labor pedagógica ha marcado a varias generaciones de bailarines, y su trabajo como creadora incluye la producción de más de una docena de obras escénicas vinculadas al tango. Ha sido jurado en certámenes nacionales de arte y campeonatos de tango, respaldada por un sólido conocimiento técnico y una mirada artística madura.`,
       ],
     },
     {
-      image: acerca_de, // puedes cambiar esta imagen por otra si lo deseas
+      image: acerca_de,
       alt: "Valeria en escena",
       paragraphs: [
-        `Ha sido reconocida como una de las mejores bailarinas de tango en México, carrera que comenzó en 1999. Fue alumna y asistente de la leyenda del Tango Carlos Gavito. Ha colaborado con compañías como "Latin Tango", "Íntimo Tango", "Malka", "Emo Tango" y "Tango y Más", realizando giras por México, Estados Unidos, Buenos Aires y China.`,
-        `Ejerce la docencia de la danza, especialmente Tango desde hace 20 años. Su enfoque está centrado en la conexión y el trabajo técnico desde la relajación y organicidad.`,
-        `Como coreógrafa ha trabajado para Opera Prima, Bárbara Colio y los espectáculos de iO Artes escénicas principalmente.`,
+        `En su práctica, la danza aparece como una forma de pensamiento encarnado. Cada gesto articula memoria, cada pausa convoca escucha, y cada escena abre un espacio donde tradición y experiencia se reconocen. Su presencia escénica transforma el movimiento en lenguaje y el lenguaje en tiempo compartido, dejando una huella que permanece más allá de la función, como una caricia musical que sobrevive en la piel.`,
       ],
     },
   ];

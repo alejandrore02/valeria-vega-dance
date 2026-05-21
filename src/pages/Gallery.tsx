@@ -40,7 +40,7 @@ const galeriaImages = Object.entries(
   import.meta.glob("@/assets/varios/galeria/*", {
     eager: true,
     import: "default",
-  })
+  }),
 );
 
 // Intenta buscar miniaturas en una subcarpeta thumbnails (mismo nombre de archivo)
@@ -49,11 +49,11 @@ const galeriaThumbnails: Record<string, string> = Object.fromEntries(
     import.meta.glob("@/assets/varios/galeria/thumbnails/*", {
       eager: true,
       import: "default",
-    })
+    }),
   ).map(([path, mod]) => [
     path.replace("/thumbnails", "").replace(/^.*\/([^/]+)$/, "$1"),
     mod as string,
-  ])
+  ]),
 );
 
 interface VideoItem {
@@ -76,7 +76,7 @@ const ytThumbs = (id: string) => ({
 
 const Gallery = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
-    null
+    null,
   );
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
 
@@ -101,6 +101,13 @@ const Gallery = () => {
     { type: "video", id: "VWwaL_ZxK-E", title: "Juerga por Tangos" },
     { type: "video", id: "AbbQDFGEJF4", title: "Tango Óleo sobre Tela" },
     { type: "video", id: "8f_CkDVLHxo", title: "Qué Quilombo" },
+    { type: "video", id: "ZPn2uVAoWZo", title: "Tango, Óleo sobre tela" },
+    {
+      type: "video",
+      id: "eyleItPM63A",
+      title: "Detrás de mí, de mujeres y tangos",
+    },
+    { type: "video", id: "XD-wwYgO5W8", title: "Trailer Rebozo 2026" },
   ];
 
   const images: ImageItem[] = [
@@ -130,7 +137,7 @@ const Gallery = () => {
   const onPrevious = () => {
     if (selectedImageIndex === null) return;
     setSelectedImageIndex(
-      (selectedImageIndex - 1 + images.length) % images.length
+      (selectedImageIndex - 1 + images.length) % images.length,
     );
   };
 
@@ -163,7 +170,7 @@ const Gallery = () => {
     setPeekImageIndex(index);
     peekImgTimer.current = window.setTimeout(
       () => setPeekImageIndex(null),
-      1200
+      1200,
     );
   };
   const handleVideoTouch = (index: number) => {
@@ -171,7 +178,7 @@ const Gallery = () => {
     setPeekVideoIndex(index);
     peekVidTimer.current = window.setTimeout(
       () => setPeekVideoIndex(null),
-      1200
+      1200,
     );
   };
 

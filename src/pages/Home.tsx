@@ -8,7 +8,7 @@ import logo from "@/assets/logo.png";
 const SESSION_KEY = "io.eventsPromo.seen.v3";
 
 const Home = () => {
-  const [showEventsPromo, setShowEventsPromo] = useState(false);
+  // Estado para ambos modales
   const { search } = useLocation();
 
   useEffect(() => {
@@ -17,22 +17,11 @@ const Home = () => {
 
     if (forceOpen) {
       sessionStorage.removeItem(SESSION_KEY);
-      setShowEventsPromo(true);
       return;
     }
 
-    const eventsSeen = sessionStorage.getItem(SESSION_KEY) === "1";
-
-    if (!eventsSeen) {
-      const timer = setTimeout(() => setShowEventsPromo(true), 3000);
-      return () => clearTimeout(timer);
-    }
+    // Si no se ha visto el video, mostrarlo primero
   }, [search]);
-
-  function closeEventsPromo() {
-    setShowEventsPromo(false);
-    sessionStorage.setItem(SESSION_KEY, "1");
-  }
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -59,13 +48,34 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Modal de Eventos */}
-      <Dialog
-        open={showEventsPromo}
-        onOpenChange={(v) =>
-          v ? setShowEventsPromo(true) : closeEventsPromo()
-        }
-      >
+      {/* Modal de Video: solo muestra el video vertical sin texto */}
+      <Dialog>
+        <DialogContent
+          className="
+            z-[999] p-0 max-w-[min(400px,90vw)] overflow-hidden rounded-2xl border-0
+            [&>button]:hidden
+            data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:duration-500 data-[state=open]:ease-out
+            data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:duration-300
+          "
+        >
+          <div className="relative bg-black rounded-2xl overflow-hidden">
+            {/* Video vertical sin controles adicionales */}
+            <div className="relative w-full" style={{ aspectRatio: "9/16" }}>
+              <video
+                src={rebozoVideo}
+                autoPlay
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                aria-label="Video promocional de Rebozo"
+              />
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal de Eventos: diseño original con Calendar icon y texto */}
+      <Dialog>
         <DialogContent
           className="
             z-[999] p-0 max-w-[min(600px,92vw)] overflow-hidden rounded-2xl border-0
@@ -84,17 +94,6 @@ const Home = () => {
               <div className="pointer-events-none absolute inset-0 opacity-25">
                 <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-80 h-80 bg-gradient-to-r from-rose-700/12 via-purple-800/10 to-red-900/8 blur-3xl rounded-full" />
               </div>
-
-              {/* Botón cerrar minimalista */}
-              <button
-                onClick={closeEventsPromo}
-                className="absolute top-4 right-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full
-                           bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10 backdrop-blur-sm transition-all duration-200
-                           focus:outline-none focus-visible:ring-2 focus-visible:ring-red-800/40"
-                aria-label="Cerrar"
-              >
-                <X className="w-4 h-4" />
-              </button>
 
               {/* Contenido */}
               <div className="relative px-10 py-14 sm:px-12 sm:py-16 text-center space-y-8">
@@ -128,18 +127,6 @@ const Home = () => {
                   Descubre la cartelera y reserva tu lugar para las siguientes
                   funciones.
                 </p>
-
-                {/* CTA elegante con acento rojo sutil */}
-                <Link
-                  to="/events"
-                  onClick={closeEventsPromo}
-                  className="inline-flex items-center justify-center gap-3 px-10 py-4
-                             bg-white text-zinc-950 font-medium tracking-wide rounded-full
-                             hover:bg-red-50 hover:shadow-xl hover:scale-[1.02] transition-all duration-300
-                             focus:outline-none focus-visible:ring-2 focus-visible:ring-red-800/40 border border-zinc-200/20"
-                >
-                  <span className="text-[15px]">Ver Eventos</span>
-                </Link>
               </div>
             </div>
           </div>
