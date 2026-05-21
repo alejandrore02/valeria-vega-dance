@@ -48,32 +48,6 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Modal de Video: solo muestra el video vertical sin texto */}
-      <Dialog>
-        <DialogContent
-          className="
-            z-[999] p-0 max-w-[min(400px,90vw)] overflow-hidden rounded-2xl border-0
-            [&>button]:hidden
-            data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:duration-500 data-[state=open]:ease-out
-            data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:duration-300
-          "
-        >
-          <div className="relative bg-black rounded-2xl overflow-hidden">
-            {/* Video vertical sin controles adicionales */}
-            <div className="relative w-full" style={{ aspectRatio: "9/16" }}>
-              <video
-                src={rebozoVideo}
-                autoPlay
-                loop
-                playsInline
-                className="w-full h-full object-cover"
-                aria-label="Video promocional de Rebozo"
-              />
-            </div>
-          </div>
-        </DialogContent>
-      </Dialog>
-
       {/* Modal de Eventos: diseño original con Calendar icon y texto */}
       <Dialog>
         <DialogContent
