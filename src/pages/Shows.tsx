@@ -1,6 +1,14 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { FileText, ExternalLink, Download, X } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  FileText,
+  ExternalLink,
+  Download,
+  Images,
+  X,
+} from "lucide-react";
 
 import lasOrquestasImg from "@/assets/shows/orquestas/Las_Orquestas_portada.jpeg";
 import detrasDeMiImg from "@/assets/shows/detras/detras-pose.jpeg";
@@ -17,12 +25,22 @@ import ioTangoImg from "@/assets/shows/io/io-tango.jpg";
 import malenaBailaImg from "@/assets/shows/malena/malena-baila.jpeg";
 import valeBnImg from "@/assets/fotos/vale_bn.webp";
 
+const lasOrquestasGallery = Object.entries(
+  import.meta.glob("@/assets/las_orquestas/*.jpg", {
+    eager: true,
+    import: "default",
+  }),
+)
+  .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+  .map(([, src]) => String(src));
+
 type ShowItem = {
   year: string;
   title: string;
   gradient: string; // Tailwind gradient classes: "from-.. via-.. to-.."
   image: string;
   pdf?: string; // Ruta al PDF si existe (e.g., "/pdfs/detras-de-mi.pdf")
+  gallery?: string[];
 };
 
 const Shows = () => {
@@ -30,6 +48,8 @@ const Shows = () => {
   const [currentShow, setCurrentShow] = useState<ShowItem | null>(null);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState<string | null>(null);
+  const [galleryIndex, setGalleryIndex] = useState(0);
+  const [galleryInteractionCount, setGalleryInteractionCount] = useState(0);
 
   const shows: ShowItem[] = [
     {
@@ -37,7 +57,7 @@ const Shows = () => {
       title: "LAS ORQUESTAS",
       gradient: "from-red-500 via-rose-500 to-pink-500",
       image: lasOrquestasImg,
-      // pdf: "/pdfs/las-orquestas.pdf",
+      gallery: lasOrquestasGallery,
     },
     {
       year: "2025",
@@ -122,14 +142,9 @@ const Shows = () => {
     },
   ];
 
-  // Detecta si el navegador es Chrome o Edge (que muestran barra PDF nativa)
-  const isChromeOrEdge = useMemo(() => {
-    if (typeof navigator === "undefined") return false;
-    const ua = navigator.userAgent;
-    return /Chrome\//.test(ua) || /Edg\//.test(ua);
-  }, []);
-
   const pdfUrl = useMemo(() => currentShow?.pdf ?? null, [currentShow]);
+  const galleryImages = currentShow?.gallery ?? [];
+  const hasGallery = galleryImages.length > 0;
 
   function openPdf(show: ShowItem) {
     if (!show.pdf) return;
@@ -138,6 +153,77 @@ const Shows = () => {
     setPdfLoading(true);
     setOpen(true);
   }
+
+  function openGallery(show: ShowItem) {
+    if (!show.gallery?.length) return;
+    setCurrentShow(show);
+    setGalleryIndex(0);
+    setGalleryInteractionCount(0);
+    setPdfError(null);
+    setPdfLoading(false);
+    setOpen(true);
+  }
+
+  function openShow(show: ShowItem) {
+    if (show.gallery?.length) {
+      openGallery(show);
+      return;
+    }
+    openPdf(show);
+  }
+
+  function showPreviousImage() {
+    if (!galleryImages.length) return;
+    setGalleryInteractionCount((count) => count + 1);
+    setGalleryIndex(
+      (currentIndex) =>
+        (currentIndex - 1 + galleryImages.length) % galleryImages.length,
+    );
+  }
+
+  function showNextImage() {
+    if (!galleryImages.length) return;
+    setGalleryInteractionCount((count) => count + 1);
+    setGalleryIndex(
+      (currentIndex) => (currentIndex + 1) % galleryImages.length,
+    );
+  }
+
+  useEffect(() => {
+    if (!open || galleryImages.length <= 1) return;
+
+    const timer = window.setInterval(() => {
+      setGalleryIndex(
+        (currentIndex) => (currentIndex + 1) % galleryImages.length,
+      );
+    }, 3500);
+
+    return () => window.clearInterval(timer);
+  }, [open, galleryImages.length, galleryInteractionCount]);
+
+  useEffect(() => {
+    if (!open || !hasGallery) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") {
+        setGalleryInteractionCount((count) => count + 1);
+        setGalleryIndex(
+          (currentIndex) =>
+            (currentIndex - 1 + galleryImages.length) % galleryImages.length,
+        );
+      }
+
+      if (event.key === "ArrowRight") {
+        setGalleryInteractionCount((count) => count + 1);
+        setGalleryIndex(
+          (currentIndex) => (currentIndex + 1) % galleryImages.length,
+        );
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, hasGallery, galleryImages.length]);
 
   return (
     <div className="min-h-screen bg-black relative pt-20">
@@ -195,18 +281,19 @@ const Shows = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {shows.map((show, index) => {
-              const isClickable = Boolean(show.pdf);
+              const isClickable = Boolean(show.pdf || show.gallery?.length);
+              const hasGallery = Boolean(show.gallery?.length);
               return (
                 <div
                   key={`${show.year}-${show.title}`}
                   role={isClickable ? "button" : undefined}
                   tabIndex={isClickable ? 0 : -1}
-                  onClick={() => isClickable && openPdf(show)}
+                  onClick={() => isClickable && openShow(show)}
                   onKeyDown={(e) => {
                     if (!isClickable) return;
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      openPdf(show);
+                      openShow(show);
                     }
                   }}
                   className={[
@@ -217,7 +304,9 @@ const Shows = () => {
                   ].join(" ")}
                   style={{ animationDelay: `${index * 0.1}s` }}
                   aria-label={
-                    isClickable ? `Abrir carpeta de ${show.title}` : undefined
+                    isClickable
+                      ? `Abrir ${hasGallery ? "galería" : "carpeta"} de ${show.title}`
+                      : undefined
                   }
                 >
                   {/* Show image */}
@@ -238,12 +327,16 @@ const Shows = () => {
                       </span>
                     </div>
 
-                    {/* Subtle 'carpeta' hint only if clickable */}
+                    {/* Subtle hint only if clickable */}
                     {isClickable && (
                       <div className="absolute bottom-4 right-4">
                         <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/10 text-white text-xs tracking-wide rounded-md border border-white/20 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity">
-                          <FileText className="w-3.5 h-3.5" />
-                          Carpeta
+                          {hasGallery ? (
+                            <Images className="w-3.5 h-3.5" />
+                          ) : (
+                            <FileText className="w-3.5 h-3.5" />
+                          )}
+                          {hasGallery ? "Galería" : "Carpeta"}
                         </span>
                       </div>
                     )}
@@ -281,12 +374,14 @@ const Shows = () => {
             setPdfLoading(false);
             setPdfError(null);
             setCurrentShow(null);
+            setGalleryIndex(0);
+            setGalleryInteractionCount(0);
           }
         }}
       >
-        <DialogContent className="group max-w-[min(1400px,98vw)] w-[98vw] h-[92vh] p-0 overflow-hidden bg-zinc-950/90 border border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl">
+        <DialogContent className="group h-[100dvh] w-screen max-w-none rounded-none border-0 bg-zinc-950/95 p-0 shadow-2xl sm:h-[92vh] sm:w-[98vw] sm:max-w-[min(1400px,98vw)] sm:rounded-2xl sm:border sm:border-white/10 sm:backdrop-blur-xl">
           {/* MICRO-TOOLBAR flotante (solo iconos, sin aumentar altura) */}
-          {pdfUrl && (
+          {pdfUrl && !hasGallery && (
             <div className="absolute top-2 right-2 z-20 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-2 py-1.5 backdrop-blur-md shadow-md opacity-80 hover:opacity-100 transition">
               <a
                 href={pdfUrl}
@@ -318,6 +413,99 @@ const Shows = () => {
             </div>
           )}
 
+          {hasGallery && (
+            <div className="relative w-full h-full bg-black">
+              <button
+                type="button"
+                aria-label="Cerrar galería"
+                onClick={() => setOpen(false)}
+                className="absolute inset-0 z-10 cursor-default"
+              />
+
+              <div className="absolute right-2 top-[max(0.5rem,env(safe-area-inset-top))] z-30 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/50 px-2 py-1.5 backdrop-blur-md shadow-md opacity-85 transition hover:opacity-100">
+                <span className="px-3 text-xs tracking-wide text-white/80">
+                  {galleryIndex + 1} / {galleryImages.length}
+                </span>
+                <button
+                  onClick={() => setOpen(false)}
+                  title="Cerrar (Esc)"
+                  aria-label="Cerrar"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full text-white hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              <div className="pointer-events-none relative z-0 h-full w-full">
+                {galleryImages.map((image, index) => (
+                  <img
+                    key={image}
+                    src={image}
+                    alt={`${currentShow?.title ?? "Galería"} ${index + 1}`}
+                    draggable={false}
+                    className={[
+                      "pointer-events-none absolute inset-0 h-full w-full object-contain px-2 pb-24 pt-16 transition-all duration-700 ease-out sm:px-6 sm:pb-28 md:px-10",
+                      index === galleryIndex
+                        ? "opacity-100 scale-100"
+                        : "opacity-0 scale-[0.985]",
+                    ].join(" ")}
+                  />
+                ))}
+              </div>
+
+              {galleryImages.length > 1 && (
+                <>
+                  <button
+                    type="button"
+                    aria-label="Imagen anterior"
+                    onClick={showPreviousImage}
+                    className="absolute left-2 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:left-3 sm:h-11 sm:w-11 md:left-5"
+                  >
+                    <ChevronLeft className="h-6 w-6 sm:h-7 sm:w-7" />
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Siguiente imagen"
+                    onClick={showNextImage}
+                    className="absolute right-2 top-1/2 z-20 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/45 text-white backdrop-blur-sm transition hover:bg-black/65 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40 sm:right-3 sm:h-11 sm:w-11 md:right-5"
+                  >
+                    <ChevronRight className="h-6 w-6 sm:h-7 sm:w-7" />
+                  </button>
+                </>
+              )}
+
+              <div className="absolute inset-x-0 bottom-0 z-20 border-t border-white/10 bg-black/55 px-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-md sm:px-3 sm:py-3">
+                <div className="mx-auto flex max-w-5xl gap-2 overflow-x-auto pb-1">
+                  {galleryImages.map((image, index) => (
+                    <button
+                      key={image}
+                      type="button"
+                      aria-label={`Ver imagen ${index + 1}`}
+                      onClick={() => {
+                        setGalleryInteractionCount((count) => count + 1);
+                        setGalleryIndex(index);
+                      }}
+                      className={[
+                        "h-14 w-11 shrink-0 overflow-hidden rounded-md border transition sm:h-16 sm:w-12 md:h-20 md:w-16",
+                        index === galleryIndex
+                          ? "border-white opacity-100"
+                          : "border-white/15 opacity-60 hover:opacity-90",
+                      ].join(" ")}
+                    >
+                      <img
+                        src={image}
+                        alt=""
+                        aria-hidden
+                        className="h-full w-full object-cover"
+                        draggable={false}
+                      />
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Loader */}
           {pdfLoading && !pdfError && (
             <div className="absolute inset-0 grid place-items-center z-10">
@@ -329,8 +517,8 @@ const Shows = () => {
           )}
 
           {/* Lienzo PDF */}
-          <div className="relative w-full h-full">
-            {pdfUrl && (
+          {pdfUrl && !hasGallery && (
+            <div className="relative w-full h-full">
               <iframe
                 key={pdfUrl}
                 src={`${pdfUrl}#toolbar=0&view=FitH`}
@@ -346,8 +534,8 @@ const Shows = () => {
                   setOpen(false);
                 }}
               />
-            )}
-          </div>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </div>
