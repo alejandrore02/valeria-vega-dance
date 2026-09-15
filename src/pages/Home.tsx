@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Calendar, X } from "lucide-react";
 import valeriaDancer from "@/assets/fotos/valeria-portada.jpg";
 import logo from "@/assets/logo.png";
+import rebozoMichoacanBanner from "@/assets/events/BannerWebInfo.png";
 
 const SESSION_KEY = "io.eventsPromo.seen.v3";
 
 const Home = () => {
-  // Estado para ambos modales
   const { search } = useLocation();
+  const [isPromoOpen, setIsPromoOpen] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(search);
@@ -17,10 +17,14 @@ const Home = () => {
 
     if (forceOpen) {
       sessionStorage.removeItem(SESSION_KEY);
+      setIsPromoOpen(true);
       return;
     }
 
-    // Si no se ha visto el video, mostrarlo primero
+    if (!sessionStorage.getItem(SESSION_KEY)) {
+      setIsPromoOpen(true);
+      sessionStorage.setItem(SESSION_KEY, "1");
+    }
   }, [search]);
 
   return (
@@ -104,6 +108,23 @@ const Home = () => {
               </div>
             </div>
           </div>
+
+      <Dialog open={isPromoOpen} onOpenChange={setIsPromoOpen}>
+        <DialogContent
+          className="
+            z-[999] p-0 max-w-[min(520px,92vw)] overflow-hidden rounded-2xl border-0 bg-transparent shadow-2xl
+            [&>button]:hidden
+            data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95 data-[state=open]:duration-500 data-[state=open]:ease-out
+            data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=closed]:duration-300
+          "
+        >
+          <Link to="/events" onClick={() => setIsPromoOpen(false)}>
+            <img
+              src={rebozoMichoacanBanner}
+              alt="REBOZO - Gira Michoacán, 23 al 27 de septiembre"
+              className="block w-full h-auto rounded-2xl"
+            />
+          </Link>
         </DialogContent>
       </Dialog>
     </div>

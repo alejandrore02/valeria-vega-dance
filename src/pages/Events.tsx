@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Calendar, MapPin, Clock, ExternalLink, X } from "lucide-react";
+import rebozoMichoacanBanner from "@/assets/events/BannerWebInfo.png";
 
 type EventDate = {
   day: string;
@@ -65,22 +66,34 @@ const Events = () => {
   }
 
   const allEvents: EventItem[] = [
-    /*dates: [
-        { day: "11", time: "20:00 hrs", label: "Martes" },
-        { day: "18", time: "20:00 hrs", label: "Martes" },
+    {
+      dates: [
+        { day: "23", time: "12:00 hrs", label: "Miércoles" },
+        { day: "24", time: "19:00 hrs", label: "Jueves" },
+        { day: "25", time: "19:30 hrs", label: "Viernes" },
+        { day: "26", time: "19:00 hrs", label: "Sábado" },
+        { day: "27", time: "20:00 hrs", label: "Domingo" },
       ],
-      month: "Febrero",
+      month: "Septiembre",
       year: "2026",
       title: "REBOZO",
-      location: "Teatro Varsovia",
-      address: "Teatro Varsovia, Ciudad de México",
-      gradient: "from-rose-500 via-pink-500 to-fuchsia-500",
-      flyer: rebozoMarzoFlyer,
+      subtitle: "Gira Michoacán",
+      location: "Gira Michoacán",
+      address: "Pátzcuaro, Morelia, Uruapan, Zamora y Paracho",
+      gradient: "from-rose-500 via-fuchsia-500 to-blue-600",
+      flyer: rebozoMichoacanBanner,
       description:
-        "Espectáculo unipersonal de música, danza y teatro, que aborda el proceso de elaboración del REBOZO, la prenda tradicional mexicana por excelencia, en una metáfora del tejido de la vida misma.",
-      dateText: "11 y 18 de febrero 2026",
-      notes: ["Boleto $350"],
-    },*/
+        "Espectáculo unipersonal de danza-teatro y música original de Celso Duarte, que aborda el proceso de elaboración del rebozo, la prenda tradicional mexicana por excelencia, como metáfora del tejido de la vida misma. En esta gira de entrada libre, Valeria Vega Solórzano lleva REBOZO a cinco sedes de Michoacán.",
+      dateText: "23 al 27 de septiembre 2026",
+      notes: [
+        "Miércoles 23 - Pátzcuaro, 12:00 hrs, Teatro Emperador Caltzontzin",
+        "Jueves 24 - Morelia, 19:00 hrs, Teatro Ocampo",
+        "Viernes 25 - Uruapan, 19:30 hrs, Centro Cultural Fábrica de San Pedro",
+        "Sábado 26 - Zamora, 19:00 hrs, Teatro Obrero",
+        "Domingo 27 - Paracho, 20:00 hrs, Plaza Principal Centro Paracho",
+        "Entrada libre",
+      ],
+    },
   ];
 
   // Filter out past events
