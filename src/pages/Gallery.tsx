@@ -29,7 +29,7 @@ import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 
 import horacioValeBn from "@/assets/fotos/horacio_vale_bn.jpg";
-import pose1 from "@/assets/fotos/pose1.png";
+import pose1 from "@/assets/fotos/pose1.webp";
 import detrasAbrazo from "@/assets/shows/detras/detras-abrazo.jpeg";
 import detrasPiso from "@/assets/shows/detras/detras-piso.jpeg";
 import detrasPose from "@/assets/shows/detras/detras-pose.jpeg";

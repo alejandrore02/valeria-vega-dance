@@ -1,5 +1,5 @@
 import valeria from "../assets/fotos/vale_bn.webp";
-import acerca_de from "../assets/shows/rebozo/valeria-rebozo.jpg";
+import acerca_de from "../assets/shows/rebozo/valeria-rebozo.webp";
 
 const About = () => {
   const sections = [

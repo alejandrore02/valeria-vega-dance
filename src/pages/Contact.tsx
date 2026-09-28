@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { Mail, Phone, Instagram, Facebook, Music } from "lucide-react";
 
 // Import images
-import damaPuerto from "@/assets/shows/dama/dama-del-puerto.jpg";
-import rebozo from "@/assets/shows/rebozo/rebozo.jpg";
+import damaPuerto from "@/assets/shows/dama/dama-del-puerto.webp";
+import rebozo from "@/assets/shows/rebozo/rebozo.webp";
 import valeriaDancer from "@/assets/fotos/horacio_vale_color.jpg";
 import tangoClass from "@/assets/clases/tango-class.jpg";
 
