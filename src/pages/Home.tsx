@@ -3,27 +3,38 @@ import { useLocation, Link } from "react-router-dom";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import valeriaDancer from "@/assets/fotos/valeria-portada.jpg";
 import logo from "@/assets/logo.png";
-import rebozoMichoacanBanner from "@/assets/events/BannerWebInfo.png";
+import rebozoTeatroIsabelaCoronaFlyer from "@/assets/events/rebozo-teatro-isabela-corona.jpeg";
+import rebozoTeatroCuauhtemocFlyer from "@/assets/events/rebozo-teatro-cuauhtemoc.jpeg";
 
 const SESSION_KEY = "io.eventsPromo.seen.v3";
 
 const Home = () => {
   const { search } = useLocation();
   const [isPromoOpen, setIsPromoOpen] = useState(false);
+  const showNextEvent = new Date() > new Date(2026, 9, 4, 23, 59, 59);
+  const promoFlyer = showNextEvent
+    ? rebozoTeatroCuauhtemocFlyer
+    : rebozoTeatroIsabelaCoronaFlyer;
+  const promoAlt = showNextEvent
+    ? "REBOZO - Teatro Cuauhtémoc, 6 al 8 de noviembre"
+    : "REBOZO - Teatro Isabela Corona, 2 al 4 de octubre";
+  const promoSessionKey = showNextEvent
+    ? SESSION_KEY + ".cuauhtemoc"
+    : SESSION_KEY + ".isabela-corona";
 
   useEffect(() => {
     const params = new URLSearchParams(search);
     const forceOpen = params.get("showEvents") === "1";
 
     if (forceOpen) {
-      sessionStorage.removeItem(SESSION_KEY);
+      sessionStorage.removeItem(promoSessionKey);
       setIsPromoOpen(true);
       return;
     }
 
-    if (!sessionStorage.getItem(SESSION_KEY)) {
+    if (!sessionStorage.getItem(promoSessionKey)) {
       setIsPromoOpen(true);
-      sessionStorage.setItem(SESSION_KEY, "1");
+      sessionStorage.setItem(promoSessionKey, "1");
     }
   }, [search]);
 
@@ -63,8 +74,8 @@ const Home = () => {
         >
           <Link to="/events" onClick={() => setIsPromoOpen(false)}>
             <img
-              src={rebozoMichoacanBanner}
-              alt="REBOZO - Gira Michoacán, 23 al 27 de septiembre"
+              src={promoFlyer}
+              alt={promoAlt}
               className="block w-full h-auto rounded-2xl"
             />
           </Link>

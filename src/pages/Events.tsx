@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Calendar, MapPin, Clock, ExternalLink, X } from "lucide-react";
-import rebozoMichoacanBanner from "@/assets/events/BannerWebInfo.png";
+import rebozoTeatroIsabelaCoronaFlyer from "@/assets/events/rebozo-teatro-isabela-corona.jpeg";
+import rebozoTeatroCuauhtemocFlyer from "@/assets/events/rebozo-teatro-cuauhtemoc.jpeg";
 
 type EventDate = {
   day: string;
@@ -68,30 +69,48 @@ const Events = () => {
   const allEvents: EventItem[] = [
     {
       dates: [
-        { day: "23", time: "12:00 hrs", label: "Miércoles" },
-        { day: "24", time: "19:00 hrs", label: "Jueves" },
-        { day: "25", time: "19:30 hrs", label: "Viernes" },
-        { day: "26", time: "19:00 hrs", label: "Sábado" },
-        { day: "27", time: "20:00 hrs", label: "Domingo" },
+        { day: "2", time: "17:00 hrs", label: "Viernes" },
+        { day: "3", time: "17:00 hrs", label: "Sábado" },
+        { day: "4", time: "17:00 hrs", label: "Domingo" },
       ],
-      month: "Septiembre",
+      month: "Octubre",
       year: "2026",
       title: "REBOZO",
-      subtitle: "Gira Michoacán",
-      location: "Gira Michoacán",
-      address: "Pátzcuaro, Morelia, Uruapan, Zamora y Paracho",
+      subtitle: "Danza / Teatro",
+      location: "Teatro \"Isabela Corona\"",
+      address: "Teatro \"Isabela Corona\"",
       gradient: "from-rose-500 via-fuchsia-500 to-blue-600",
-      flyer: rebozoMichoacanBanner,
+      flyer: rebozoTeatroIsabelaCoronaFlyer,
       description:
-        "Espectáculo unipersonal de danza-teatro y música original de Celso Duarte, que aborda el proceso de elaboración del rebozo, la prenda tradicional mexicana por excelencia, como metáfora del tejido de la vida misma. En esta gira de entrada libre, Valeria Vega Solórzano lleva REBOZO a cinco sedes de Michoacán.",
-      dateText: "23 al 27 de septiembre 2026",
+        "Espectáculo unipersonal de danza-teatro y música original de Celso Duarte, que aborda el proceso de elaboración del rebozo, la prenda tradicional mexicana por excelencia, como metáfora del tejido de la vida misma.",
+      dateText: "2 al 4 de octubre 2026",
       notes: [
-        "Miércoles 23 - Pátzcuaro, 12:00 hrs, Teatro Emperador Caltzontzin",
-        "Jueves 24 - Morelia, 19:00 hrs, Teatro Ocampo",
-        "Viernes 25 - Uruapan, 19:30 hrs, Centro Cultural Fábrica de San Pedro",
-        "Sábado 26 - Zamora, 19:00 hrs, Teatro Obrero",
-        "Domingo 27 - Paracho, 20:00 hrs, Plaza Principal Centro Paracho",
+        "Viernes 2, sábado 3 y domingo 4 de octubre - 17:00 hrs",
         "Entrada libre",
+        "Adolescentes y adultos",
+      ],
+    },
+    {
+      dates: [
+        { day: "6", time: "13:00 hrs", label: "Viernes" },
+        { day: "7", time: "13:00 hrs", label: "Sábado" },
+        { day: "8", time: "13:00 hrs", label: "Domingo" },
+      ],
+      month: "Noviembre",
+      year: "2026",
+      title: "REBOZO",
+      subtitle: "Danza / Teatro",
+      location: "Teatro Cuauhtémoc",
+      address: "Teatro Cuauhtémoc",
+      gradient: "from-amber-500 via-orange-500 to-red-600",
+      flyer: rebozoTeatroCuauhtemocFlyer,
+      description:
+        "Espectáculo unipersonal de danza-teatro y música original de Celso Duarte, que aborda el proceso de elaboración del rebozo, la prenda tradicional mexicana por excelencia, como metáfora del tejido de la vida misma.",
+      dateText: "6 al 8 de noviembre 2026",
+      notes: [
+        "Viernes 6, sábado 7 y domingo 8 de noviembre - 13:00 hrs",
+        "Entrada libre",
+        "Adolescentes y adultos",
       ],
     },
   ];
@@ -146,7 +165,7 @@ const Events = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10">
             {events.map((event, index) => (
               <div
-                key={`${event.title}-${event.year}`}
+                key={`${event.title}-${event.location}-${event.year}`}
                 role="button"
                 tabIndex={0}
                 onClick={() => openEventDetails(event)}
