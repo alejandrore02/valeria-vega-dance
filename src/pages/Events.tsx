@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Calendar, MapPin, Clock, ExternalLink, X } from "lucide-react";
 import rebozoTeatroIsabelaCoronaFlyer from "@/assets/events/rebozo-teatro-isabela-corona.jpeg";
 import rebozoTeatroCuauhtemocFlyer from "@/assets/events/rebozo-teatro-cuauhtemoc.jpeg";
+
+import almaComunFlyer from "@/assets/almacomun/banner.webp";
+import almaComunThumbnail from "@/assets/almacomun/banner-540.webp";
+import encuentroFlyer from "@/assets/almacomun/encuentro1.webp";
+import encuentroThumbnail from "@/assets/almacomun/encuentro1-540.webp";
+import encuentroPrograma18 from "@/assets/almacomun/encuentro2.webp";
+import encuentroPrograma20 from "@/assets/almacomun/encuentro3.webp";
 
 type EventDate = {
   day: string;
@@ -20,6 +27,8 @@ type EventItem = {
   address: string; // dirección fija siempre
   gradient: string;
   flyer: string;
+  thumbnail?: string;
+  program?: { image: string; label: string }[];
   description?: string;
   ticketUrl?: string;
 
@@ -67,6 +76,53 @@ const Events = () => {
   }
 
   const allEvents: EventItem[] = [
+    {
+      dates: [{ day: "17" }, { day: "22" }],
+      month: "Noviembre",
+      year: "2026",
+      title: "XI Encuentro Nacional de Danza",
+      subtitle: "Participación de Valeria Vega · Tango contemporáneo",
+      location: "Estado de México",
+      address: "Actividades en Toluca y distintas sedes del encuentro",
+      gradient: "from-amber-300 via-orange-400 to-rose-500",
+      flyer: encuentroFlyer,
+      thumbnail: encuentroThumbnail,
+      dateText: "17 al 22 de noviembre de 2026",
+      description:
+        "El XI Encuentro Nacional de Danza reúne propuestas de distintos estados del país con funciones, talleres, videodanza y exposiciones. Valeria Vega participa por Michoacán impartiendo el taller de tango contemporáneo.",
+      notes: [
+        "Taller de tango contemporáneo: miércoles 18 de noviembre, 9:00 h. Imparte: Valeria Vega (Michoacán).",
+        "Sede del taller: Salón 2 del Conservatorio de Música. Apto para personas de 16 años en adelante.",
+        "La programación del 18 de noviembre incluye funciones, talleres, videodanza, exposiciones y la plataforma Jóvenes al Encuentro.",
+        "El viernes 20 de noviembre hay talleres y una sesión de videodanza a las 21:00 h en la Sala 1 de la Cineteca del Centro Cultural Mexiquense de Toluca, apta para todo público.",
+        "Consulta las sedes, los horarios y los públicos de cada actividad en los programas adjuntos. Más programación en @danzaINBAL.",
+      ],
+      program: [
+        { image: encuentroPrograma18, label: "Programa del 18 de noviembre: incluye el taller de Valeria Vega" },
+        { image: encuentroPrograma20, label: "Programa del 20 de noviembre: talleres, videodanza y exposiciones" },
+      ],
+    },
+    {
+      dates: [{ day: "24", time: "20:00 hrs", label: "Martes" }],
+      month: "Noviembre",
+      year: "2026",
+      title: "El Alma Común",
+      subtitle: "Souls in Common · Diferentes voces y raíces",
+      location: "Stelaris Foro Reforma",
+      address: "Av. Paseo de la Reforma 80, piso 25, Juárez, Cuauhtémoc, CDMX",
+      gradient: "from-amber-300 via-yellow-500 to-orange-600",
+      flyer: almaComunFlyer,
+      thumbnail: almaComunThumbnail,
+      dateText: "24 de noviembre de 2026",
+      description:
+        "Diferentes voces y raíces, una misma pasión: el arte que nos une. El Alma Común / Souls in Common se presenta en Stelaris Foro Reforma.",
+      ticketUrl: "https://mx.goliiive.com/el-almacomun/",
+      notes: [
+        "Martes 24 de noviembre · 20:00 h",
+        "Boletos disponibles en mx.goliiive.com/el-almacomun/",
+        "Instagram y TikTok: @elalmacomun",
+      ],
+    },
     {
       dates: [
         { day: "2", time: "17:00 hrs", label: "Viernes" },
@@ -184,14 +240,18 @@ const Events = () => {
                 <div className="relative aspect-[3/4] sm:aspect-[4/5] md:aspect-[3/4] overflow-hidden">
                   {/* Fondo cover blur para llenar el card */}
                   <img
-                    src={event.flyer}
+                    src={event.thumbnail ?? event.flyer}
+                    loading="lazy"
+                    decoding="async"
                     alt=""
                     aria-hidden
                     className="absolute inset-0 w-full h-full object-cover blur-md scale-110 opacity-40"
                   />
                   {/* Flyer principal sin recorte */}
                   <img
-                    src={event.flyer}
+                    src={event.thumbnail ?? event.flyer}
+                    loading="lazy"
+                    decoding="async"
                     alt={event.title}
                     className="relative z-10 mx-auto h-full w-auto max-w-full object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.35)] transition-transform duration-500 group-hover:scale-[1.02]"
                   />
@@ -303,7 +363,7 @@ const Events = () => {
           if (!v) setCurrentEvent(null);
         }}
       >
-        <DialogContent className="max-w-[min(980px,95vw)] w-[95vw] max-h-[90vh] p-0 overflow-hidden bg-zinc-950/95 border border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl [&>button[class*='sr-only']]:hidden">
+        <DialogContent aria-describedby={undefined} className="max-w-[min(980px,95vw)] w-[95vw] max-h-[90vh] p-0 overflow-hidden bg-zinc-950/95 border border-white/10 backdrop-blur-xl rounded-2xl shadow-2xl [&>button[class*='sr-only']]:hidden">
           {currentEvent && (
             <div className="relative h-full">
               <button
@@ -339,9 +399,9 @@ const Events = () => {
                     <div
                       className={`w-16 h-1 bg-gradient-to-r ${currentEvent.gradient} rounded-full mb-4`}
                     />
-                    <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1 leading-tight">
+                    <DialogTitle className="font-serif text-2xl sm:text-3xl md:text-4xl text-white mb-1 leading-tight">
                       {currentEvent.title}
-                    </h2>
+                    </DialogTitle>
                     {currentEvent.subtitle && (
                       <p className="font-sans text-base text-white/60 italic mb-2">
                         {currentEvent.subtitle}
@@ -360,7 +420,9 @@ const Events = () => {
                         <div className="flex-1">
                           <p className="text-sm text-white/50 mb-2">Fechas</p>
                           <div className="space-y-1">
-                            {currentEvent.dates.map((date, idx) => (
+                            {currentEvent.dateText && !currentEvent.dates.some((date) => date.time) ? (
+                              <p className="text-base">{formatDateDisplay(currentEvent)}</p>
+                            ) : currentEvent.dates.map((date, idx) => (
                               <div
                                 key={idx}
                                 className="flex items-center justify-between gap-2"
@@ -417,6 +479,23 @@ const Events = () => {
                       </div>
                     )}
                   </div>
+
+                  <a href={currentEvent.flyer} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-sm text-amber-200 hover:underline">
+                    Ver cartel completo <ExternalLink className="h-4 w-4" />
+                  </a>
+
+                  {currentEvent.program && (
+                    <div className="space-y-4 border-t border-white/10 pt-4">
+                      <h3 className="text-lg text-white">Programación</h3>
+                      <p className="text-sm text-white/60">Selecciona una imagen para verla en tamaño completo.</p>
+                      {currentEvent.program.map((page) => (
+                        <a key={page.image} href={page.image} target="_blank" rel="noopener noreferrer" className="block space-y-2 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60">
+                          <img src={page.image} alt={page.label} loading="lazy" decoding="async" className="h-auto w-full rounded-lg" />
+                          <span className="block text-sm text-amber-200">{page.label} ↗</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
 
                   {/* CTAs */}
                   <div className="flex flex-wrap gap-3 pt-2">
